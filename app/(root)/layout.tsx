@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Footer from "@/components/footer";
+import Header from "@/components/shared/header";
 
 export default function RootLayout({
   children,
@@ -6,9 +8,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-   <div className="flex-1 h-screen flex-col">
-    Hola
+    <>
+   <div className="flex h-screen flex-col">
+    <Header/>
     {children}
    </div>
+    <Footer />
+   </>
   );
 }
