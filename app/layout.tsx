@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import {APP_NAME, APP_DESCRIPTION, SERVER_URL} from "@/lib/constants"
 
 const interFont = Inter({
   variable: "--font-geist-sans",
@@ -9,11 +10,12 @@ const interFont = Inter({
 
 
 export const metadata: Metadata = {
-  title: "Proyecto Next 2025",
-  description: "Proyecto de clase con Next.js",
+  title: APP_NAME,
+  description: APP_DESCRIPTION,
+  metadataBase: new URL(SERVER_URL)
 };
 
-export default function RootLayout({
+export default function MainLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
