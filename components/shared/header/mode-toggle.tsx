@@ -18,7 +18,7 @@ export default function ModeToggle() {
         <DropdownMenuTrigger>
             <Button variant={"ghost"} className='focus-visible:ring-0 focus-visible:ring-offset-0'>
                 {theme === 'system' ? (<SunMoon/>):(
-                    theme === 'dark' ? (<MoonIcon/>):(<SunMoon/>)
+                    theme === 'dark' ? (<MoonIcon/>):(<SunIcon/>)
                 ) }
             </Button>
         </DropdownMenuTrigger>
