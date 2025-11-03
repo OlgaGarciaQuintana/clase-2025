@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { APP_NAME } from '@/lib/constants'
+import ModeToggle from './mode-toggle'
 
 export default function Header() {
     return (
@@ -18,6 +19,7 @@ export default function Header() {
                 </span>
             </div>
             <div className='space-x-2'>
+                <ModeToggle />
                 <Button asChild variant={'ghost'}>
                         <Link href={'/cart'}>
                            <ShoppingCartIcon/> Cart

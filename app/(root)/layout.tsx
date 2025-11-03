@@ -11,7 +11,7 @@ export default function RootLayout({
     <>
    <div className="flex h-screen flex-col">
     <Header/>
-    {children}
+    <main className="flex-1 wrapper">{children}</main>
    </div>
     <Footer />
    </>
