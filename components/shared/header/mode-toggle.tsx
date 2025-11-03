@@ -13,9 +13,16 @@ import { Button } from '@/components/ui/button';
 
 export default function ModeToggle() {
     const {theme, setTheme} = useTheme();
+    const [mounted, setMounted] = useState(false);
+    //cuando arranca esto se va a ejecutar
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+    //si no hay nada, no dibujara nada
+    if (!mounted) return null;
   return (
     <DropdownMenu>
-        <DropdownMenuTrigger>
+        <DropdownMenuTrigger asChild>
             <Button variant={"ghost"} className='focus-visible:ring-0 focus-visible:ring-offset-0'>
                 {theme === 'system' ? (<SunMoon/>):(
                     theme === 'dark' ? (<MoonIcon/>):(<SunIcon/>)
