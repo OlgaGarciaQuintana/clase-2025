@@ -16,7 +16,9 @@ export default function ProductList({
     <div className="my-10">
       <h2 className="h2-bold mb-4">{title ? title : "Lista Productos"}</h2>
       {limitedData.length > 0 ?
-      limitedData.map((p)=> <ProductCard key={p.slug} product={p}/>) 
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {limitedData.map((p)=> <ProductCard key={p.slug} product={p}/>)}
+      </div>
       :
       <div>
         <p>No products found</p>
