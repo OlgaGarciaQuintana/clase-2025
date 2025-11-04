@@ -9,9 +9,24 @@ export default function ProductCard({ product }: { product: Product }) {
     <Card className="w-full max-w-sm">
       <CardHeader className="p-0 items-center">
         <Link href={`/product/${product.slug}`} passHref>
-          <Image src={product.images[0]} alt={product.name} height={300} width={300} priority />
+          <Image 
+            src={product.images[0]} 
+            alt={product.name} 
+            height={300} 
+            width={300} 
+            priority />
         </Link>
       </CardHeader>
+      <CardContent className="p-4 grid gap-4">
+        <div className="text-s">{product.brand}</div>
+        <Link href={`/product/${product.slug}`}>
+            <div className="text-sm font-medium">{product.name}</div>
+        </Link>
+        <div className="flex-between gap-4">
+            <p>{product.rating} Stars</p>
+            <p>{product.stock > 0 ? product.price : "Out of stock"}</p>
+        </div>
+      </CardContent>
     </Card>
   );
 }
