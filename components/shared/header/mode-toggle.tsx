@@ -26,6 +26,7 @@ export default function ModeToggle() {
             setTheme('system');
         }
     };
+    
   return (
     <Button
       variant={"ghost"}
