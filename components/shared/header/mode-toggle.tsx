@@ -1,7 +1,7 @@
 'use client'
 import React, {useState, useEffect} from 'react'
 import { useTheme } from 'next-themes'
-import { SunIcon, MoonIcon, SunMoon } from 'lucide-react';
+import { SunIcon, MoonIcon, SunMoon, IceCream2Icon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function ModeToggle() {
@@ -14,14 +14,18 @@ export default function ModeToggle() {
     //si no hay nada, no dibujara nada
     if (!mounted) return null;
 
-    // ciclo de temas
-    const themes: Array<'system'|'light'|'dark'> = ['system','light','dark'];
     const cycleTheme = () => {
-        const idx = themes.indexOf((theme as any) ?? 'system');
-        const next = themes[(idx + 1) % themes.length];
-        setTheme(next);
+        const t = typeof theme === 'string' ? theme : 'system';
+        if (t === 'system') {
+            setTheme('light');
+        } else if (t === 'light') {
+            setTheme('dark');
+        } else if (t === 'dark') {
+            setTheme('elegant');
+        } else {
+            setTheme('system');
+        }
     };
-
   return (
     <Button
       variant={"ghost"}
@@ -30,9 +34,15 @@ export default function ModeToggle() {
       aria-label={`Theme: ${theme}. Click to change`}
       title={`Theme: ${theme}. Click to change`}
     >
-      {theme === 'system' ? (<SunMoon/>):(
-        theme === 'dark' ? (<MoonIcon/>):(<SunIcon/>)
-      ) }
+      {theme === 'system' ? (
+        <SunMoon/>
+      ) : theme === 'dark' ? (
+        <MoonIcon/>
+      ) : theme === 'light' ? (
+        <SunIcon/>
+      ) : (
+        <IceCream2Icon/>
+      )}
     </Button>
   )
 }
