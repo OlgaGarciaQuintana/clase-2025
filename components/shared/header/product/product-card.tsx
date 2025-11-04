@@ -29,7 +29,7 @@ export default function ProductCard({ product }: { product: Product }) {
           {product.stock > 0 ? (
             <ProductPrice value={product.price} />
           ) : (
-            "Out of stock"
+            <p className="text-destructive">Out of stock</p>
           )}
         </div>
       </CardContent>
