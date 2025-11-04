@@ -21,12 +21,14 @@ export default function MainLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const temas = ['system', 'light', 'dark', 'elegant'];
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${interFont.className} antialiased`}
       >
         <ThemeProvider
+          value={Object.fromEntries(temas.map((t) => [t, t]))}
           attribute={"class"}
           defaultTheme="light"
           enableSystem

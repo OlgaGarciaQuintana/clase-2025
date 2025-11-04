@@ -13,17 +13,17 @@ export default function ModeToggle() {
     }, []);
     //si no hay nada, no dibujara nada
     if (!mounted) return null;
-
+    const temas = ['system', 'light', 'dark', 'elegant'];
     const cycleTheme = () => {
         const t = typeof theme === 'string' ? theme : 'system';
         if (t === 'system') {
-            setTheme('light');
+            setTheme(temas[1]);
         } else if (t === 'light') {
-            setTheme('dark');
+            setTheme(temas[2]);
         } else if (t === 'dark') {
-            setTheme('elegant');
-        } else {
-            setTheme('system');
+            setTheme(temas[3]);
+        } else if (t === 'elegant') {
+            setTheme(temas[0]);
         }
     };
     
