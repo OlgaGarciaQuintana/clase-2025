@@ -6,7 +6,10 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "compose": "docker compose -f ./docker/proyecto/docker-compose.postgres.yaml up -d",
+    "compose-down": "docker compose -f ./docker/proyecto/docker-compose.postgres.yaml down",
+    "inicio": "npm run compose && npm run dev"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
