@@ -1,6 +1,7 @@
 services:
   postgres:
     image: postgres:18
+    container_name: pepito
     restart: always
     environment:
       POSTGRES_DB: prostore
@@ -16,18 +17,19 @@ services:
       timeout: 2s
       retries: 20
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/18/docker
     command: postgres -c listen_addresses='*'
     logging:
       options:
         max-size: "10m"
         max-file: "3"
-adminer:
-  image: adminer
-  restart: always
-  ports: 8080:8080
-  networks:
-    - prisma-network
+  adminer:
+    image: adminer
+    restart: always
+    ports: 
+      - 9900:8080
+    networks:
+      - prisma-network
 
 networks:
   prisma-network:
