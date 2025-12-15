@@ -4,6 +4,9 @@ import { notFound } from 'next/navigation';
 import ProductImages from '@/components/shared/header/product/product-images';
 import { Product } from '@/types/Product';
 import ProductPrice from '@/components/shared/header/product/product-price';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 
 export default async function ProductDetailsPage({
     params,
@@ -38,10 +41,38 @@ export default async function ProductDetailsPage({
                   className='w-24 rounded-full bg-green-100 text-green-700 px-5 py-2'
                 />
               </div>
+              <div className='mt-10'>
+                <p className='font-semibold'>Description</p>
+                <p>{product.description}</p>
+              </div>
             </div>
           </div>
-          {/* Columna acciones x1 */}
 
+          {/* Columna acciones x1 */}
+          <div className='col-span-1'>
+          <Card>
+            <CardContent className='p-4'>
+              <div className='mb-2 flex justify-between'>
+                <div>Price</div>
+                <div>
+                  <ProductPrice value={Number(product.price)} />                   
+                </div>
+              </div>
+              <div className='mb-2 flex justify-between'>
+                <div>Status</div>
+                {product.stock > 0 ?
+                  (<Badge variant={'outline'}>In Stock</Badge>):
+                  (<Badge variant={'destructive'}>Out of Stock</Badge>)
+                }
+              </div>
+              {product.stock > 0 && (
+                <div className='flex-center'>
+                  <Button className='w-full'>Add to cart</Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+          </div>
         </section>
      </>
   );
