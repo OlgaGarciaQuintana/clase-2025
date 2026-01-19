@@ -1,47 +1,37 @@
 "use client";
+import { Label } from "@radix-ui/react-label";
 import React from "react";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { signUpDefaultValues } from "@/lib/constants";
 import { authClient } from "@/lib/auth-client";
 
 export default function CredentialsSignInForm() {
-  async function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
+  async function handleSumbit(evt:React.FormEvent<HTMLFormElement>) {
     evt.preventDefault();
     const formData = new FormData(evt.currentTarget);
-    const name = String(formData.get("name"));
     const email = String(formData.get("email"));
     const password = String(formData.get("password"));
-    // Comprobaciones de los campos del formulario
-    if (!name || !email || !password) return;
+    //Comprobaciones de los campos del formulario
+    if(!password || !email) return;
 
-    await authClient.signUp.email({
-      name,
-      email,
-      password,
-    },
-    {
-      onRequest: () => {},
-      onResponse: () => {},
-      onError: (ctx) => { console.log(ctx.error.message)},
-      onSuccess: () => {"Login correcto"},
-    }
-  );
+    await authClient.signIn.email(
+      {
+        email,
+        password,
+        callbackURL: "/profile",
+      },
+      {
+        onRequest: () => {},
+        onResponse: () => {},
+        onError: (ctx) => { console.log(ctx.error.message)},
+        onSuccess: () => { console.log("Login correcto")},
+      }
+    );
   }
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSumbit}>
       <div className="space-y-6">
-        <div>
-          <Label htmlFor="name">Name</Label>
-          <Input
-            id="name"
-            name="name"
-            type="text"
-            defaultValue={signUpDefaultValues.name}
-            required
-          />
-        </div>
         <div>
           <Label htmlFor="email">Email</Label>
           <Input
@@ -63,7 +53,7 @@ export default function CredentialsSignInForm() {
           />
         </div>
         <div>
-          <Button className="w-full">Sign Up</Button>
+          <Button className="w-full" type="submit">Sign In</Button>
         </div>
       </div>
     </form>

@@ -1,36 +1,37 @@
 "use client";
+import { Label } from "@radix-ui/react-label";
 import React from "react";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { signUpDefaultValues } from "@/lib/constants";
 import { authClient } from "@/lib/auth-client";
 
 export default function CredentialsSignUpForm() {
-  async function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
+  async function handleSumbit(evt:React.FormEvent<HTMLFormElement>) {
     evt.preventDefault();
     const formData = new FormData(evt.currentTarget);
     const name = String(formData.get("name"));
     const email = String(formData.get("email"));
     const password = String(formData.get("password"));
-    // Comprobaciones de los campos del formulario
-    if (!name || !email || !password) return;
-
-    await authClient.signUp.email({
-      name,
-      email,
-      password,
-    },
-    {
-      onRequest: () => {},
-      onResponse: () => {},
-      onError: (ctx) => { console.log(ctx.error.message)},
-      onSuccess: () => {"Login correcto"},
-    }
-  );
+    //Comprobaciones de los campos del formulario
+    if(!name || !password || !email) return;
+    console.log("Registro")
+    await authClient.signUp.email(
+      {
+        email,
+        password,
+        name
+      },
+      {
+        onRequest: () => {},
+        onResponse: () => {},
+        onError: (ctx) => { console.log(ctx.error.message)},
+        onSuccess: () => { console.log("Registro correcto")},
+      }
+    );
   }
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSumbit}>
       <div className="space-y-6">
         <div>
           <Label htmlFor="name">Name</Label>
@@ -63,7 +64,7 @@ export default function CredentialsSignUpForm() {
           />
         </div>
         <div>
-          <Button className="w-full">Sign Up</Button>
+          <Button className="w-full" type="submit">Sign Up</Button>
         </div>
       </div>
     </form>
