@@ -23,7 +23,7 @@ export default async function ProductDetailsPage({
         <section className="grid grid-cols-d md:grid-cols-5">
           {/* Seccion imágenes x2 */}
           <div className="col-span-2">
-            <ProductImages />
+            <ProductImages images={product.images} />
           </div>
           {/* Columna detalles x2 */}
           <div className="col-span-2 p-5">

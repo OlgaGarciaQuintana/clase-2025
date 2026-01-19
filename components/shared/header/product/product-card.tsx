@@ -10,7 +10,7 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <Card className="w-full max-w-sm">
       <CardHeader className="p-0 items-center">
-        <Link href={`/product/${product.slug}`} passHref>
+        <Link href={`/product/${product.slug}?imageIndex=0`} passHref>
           <Image
             src={product.images[0]}
             alt={product.name}
@@ -22,7 +22,7 @@ export default function ProductCard({ product }: { product: Product }) {
       </CardHeader>
       <CardContent className="p-4 grid gap-4">
         <div className="text-s">{product.brand}</div>
-        <Link href={`/product/${product.slug}`}>
+        <Link href={`/product/${product.slug}?imageIndex=0`}>
           <div className="text-sm font-medium">{product.name}</div>
         </Link>
         <div className="flex-between gap-4">

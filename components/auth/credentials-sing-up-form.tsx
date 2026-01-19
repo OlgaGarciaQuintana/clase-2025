@@ -4,10 +4,33 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { signUpDefaultValues } from "@/lib/constants";
+import { authClient } from "@/lib/auth-client";
 
 export default function CredentialsSignUpForm() {
+  async function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
+    evt.preventDefault();
+    const formData = new FormData(evt.currentTarget);
+    const name = String(formData.get("name"));
+    const email = String(formData.get("email"));
+    const password = String(formData.get("password"));
+    // Comprobaciones de los campos del formulario
+    if (!name || !email || !password) return;
+
+    await authClient.signUp.email({
+      name,
+      email,
+      password,
+    },
+    {
+      onRequest: () => {},
+      onResponse: () => {},
+      onError: (ctx) => { console.log(ctx.error.message)},
+      onSuccess: () => {},
+    }
+  );
+  }
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="space-y-6">
         <div>
           <Label htmlFor="name">Name</Label>
