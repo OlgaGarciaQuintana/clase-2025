@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { signUpDefaultValues } from "@/lib/constants";
 import { authClient } from "@/lib/auth-client";
 
-export default function CredentialsSignUpForm() {
+export default function CredentialsSignInForm() {
   async function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
     evt.preventDefault();
     const formData = new FormData(evt.currentTarget);
@@ -25,7 +25,7 @@ export default function CredentialsSignUpForm() {
       onRequest: () => {},
       onResponse: () => {},
       onError: (ctx) => { console.log(ctx.error.message)},
-      onSuccess: () => {},
+      onSuccess: () => {"Login correcto"},
     }
   );
   }

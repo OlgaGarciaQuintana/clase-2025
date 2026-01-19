@@ -4,7 +4,7 @@ import { APP_NAME } from "@/lib/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import CredentialsSignUpForm from "@/components/auth/credentials-sing-up-form";
+import CredentialsSignUpForm from "@/components/auth/credentials-sign-up-form";
 
 
 export const metadata:Metadata = {
