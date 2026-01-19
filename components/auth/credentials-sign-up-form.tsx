@@ -54,6 +54,16 @@ export default function CredentialsSignUpForm() {
           />
         </div>
         <div>
+          <Label htmlFor="phone">Phone</Label>
+          <Input
+            id="phone"
+            name="phone"
+            type="text"
+            defaultValue={signUpDefaultValues.phone}
+            required
+          />
+        </div>
+        <div>
           <Label htmlFor="password">Password</Label>
           <Input
             id="password"

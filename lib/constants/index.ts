@@ -9,4 +9,5 @@ export const signUpDefaultValues = {
   name: "olga",
   email: "olga@olga.com",
   password: "123456",
+  phone: "123456789",
 };
