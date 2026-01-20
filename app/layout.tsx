@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import {APP_NAME, APP_DESCRIPTION, SERVER_URL} from "@/lib/constants";
 import { ThemeProvider } from "next-themes";
+import { Toaster } from "sonner";
 
 const interFont = Inter({
   variable: "--font-geist-sans",
@@ -35,6 +36,7 @@ export default function MainLayout({
           disableTransitionOnChange
         >
           {children}
+          <Toaster richColors expand closeButton />
         </ThemeProvider>
       </body>
     </html>

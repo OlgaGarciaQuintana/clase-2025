@@ -5,6 +5,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { signUpDefaultValues } from "@/lib/constants";
 import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 export default function CredentialsSignUpForm() {
   async function handleSumbit(evt:React.FormEvent<HTMLFormElement>) {
@@ -27,8 +28,13 @@ export default function CredentialsSignUpForm() {
       {
         onRequest: () => {},
         onResponse: () => {},
-        onError: (ctx) => { console.log(ctx.error.message)},
-        onSuccess: () => { console.log("Registro correcto")},
+        onError: (ctx) => { 
+          console.log(ctx.error.message)
+        },
+        onSuccess: () => { 
+          toast.success("Registro correcto");
+          console.log("Registro correcto")
+        },
       }
     );
   }
