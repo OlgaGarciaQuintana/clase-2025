@@ -28,7 +28,8 @@ export default function CredentialsSignUpForm() {
       {
         onRequest: () => {},
         onResponse: () => {},
-        onError: (ctx) => { 
+        onError: (ctx) => {
+          toast.error(ctx.error.message);
           console.log(ctx.error.message)
         },
         onSuccess: () => { 
