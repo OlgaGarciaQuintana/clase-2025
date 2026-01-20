@@ -36,7 +36,7 @@ export default function MainLayout({
           disableTransitionOnChange
         >
           {children}
-          <Toaster richColors expand closeButton />
+          <Toaster richColors expand closeButton position="top-center"/>
         </ThemeProvider>
       </body>
     </html>
