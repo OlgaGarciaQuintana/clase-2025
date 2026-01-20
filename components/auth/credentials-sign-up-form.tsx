@@ -56,7 +56,7 @@ export default function CredentialsSignUpForm() {
           />
         </div>
         <div>
-          <Label htmlFor="phone">Phone {/*OPCIONAL*/}</Label>
+          <Label htmlFor="phone">Phone <span className="text-muted-foreground">(Optional)</span></Label>
           <Input
             id="phone"
             name="phone"
