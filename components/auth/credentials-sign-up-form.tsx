@@ -92,6 +92,12 @@ export default function CredentialsSignUpForm() {
             required
           />
         </div>
+        <div className="space-x-2">
+          <Input id="terms" name="terms" type="checkbox" className="size-4" required />
+          <Label htmlFor="terms">
+             I agree to the <a href="/terms" className="underline">Terms and Conditions</a>
+          </Label>
+        </div>
         <div>
           <Button className="w-full" type="submit">Sign Up</Button>
         </div>
