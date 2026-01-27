@@ -77,7 +77,17 @@ export default function CredentialsSignUpForm() {
           <Input
             id="password"
             name="password"
-            type="text"
+            type="password"
+            defaultValue={signUpDefaultValues.password}
+            required
+          />
+        </div>
+        <div>
+          <Label htmlFor="confirmPassword">Confirm Password</Label>
+          <Input
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
             defaultValue={signUpDefaultValues.password}
             required
           />
