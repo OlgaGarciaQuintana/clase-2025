@@ -24,37 +24,42 @@ export default function ProductTable({
   currentPage?: number;
   pageSize?: number;
 }) {
-  return <>
-  <Table>
-    <TableCaption>
-        List of Products
-    </TableCaption>
-    <TableHeader>
-        <TableRow>
+  return (
+    <>
+      <Table>
+        <TableCaption>List of Products</TableCaption>
+        <TableHeader>
+          <TableRow>
             <TableHead>Name</TableHead>
             <TableHead>Price</TableHead>
             <TableHead>Slug</TableHead>
             <TableHead>Quantity</TableHead>
             <TableHead>Actions</TableHead>
-        </TableRow>
-    </TableHeader>
-    <TableBody>
-        {products.map((product) => (
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {products.map((product) => (
             <TableRow key={product.id}>
-                <TableCell>{product.name}</TableCell>
-                <TableCell>{product.price}</TableCell>
-                <TableCell>{product.slug}</TableCell>
-                <TableCell>{product.stock}</TableCell>
-                <TableCell>
-                    <Button variant={'outline'} className="text-destructive" asChild>
-                        <Link href={`/admin/products/${product.id}`}>
-                            <Trash />
-                        </Link>
-                    </Button>
-                </TableCell>
+              <TableCell>{product.name}</TableCell>
+              <TableCell>{product.price}</TableCell>
+              <TableCell>{product.slug}</TableCell>
+              <TableCell>{product.stock}</TableCell>
+              <TableCell>
+                <Button
+                  variant={"outline"}
+                  className="text-destructive"
+                  asChild
+                >
+                  <Link href={`/admin/products/${product.id}`}>
+                    <Pencil />
+                    <Trash />
+                  </Link>
+                </Button>
+              </TableCell>
             </TableRow>
-        ))}
-    </TableBody>
-  </Table>
-  </>;
+          ))}
+        </TableBody>
+      </Table>
+    </>
+  );
 }
