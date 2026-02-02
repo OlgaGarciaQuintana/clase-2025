@@ -9,6 +9,9 @@ import {
   TableRow,
   TableHeader,
 } from "@/components/ui/table";
+import { Button } from "../ui/button";
+import Link from "next/link";
+import { Pencil, Trash } from "lucide-react";
 
 export default function ProductTable({
   products,
@@ -39,6 +42,16 @@ export default function ProductTable({
         {products.map((product) => (
             <TableRow key={product.id}>
                 <TableCell>{product.name}</TableCell>
+                <TableCell>{product.price}</TableCell>
+                <TableCell>{product.slug}</TableCell>
+                <TableCell>{product.stock}</TableCell>
+                <TableCell>
+                    <Button variant={'outline'} className="text-destructive" asChild>
+                        <Link href={`/admin/products/${product.id}`}>
+                            <Trash />
+                        </Link>
+                    </Button>
+                </TableCell>
             </TableRow>
         ))}
     </TableBody>

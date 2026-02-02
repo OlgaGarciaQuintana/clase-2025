@@ -25,7 +25,11 @@ export default async function AdminPage({
   return (
     <>
       <div>AdminPage</div>
-      <ProductTable products={data} currentPage={pageInfo.currentPage} totalPages={pageInfo.totalPages}/>
+      <ProductTable
+        products={data}
+        currentPage={pageInfo.currentPage}
+        totalPages={pageInfo.totalPages}
+      />
       <SignOutButton />
     </>
   );
