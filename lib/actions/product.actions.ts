@@ -9,6 +9,29 @@ export async function getLatestProducts() {
     return convertToPlainObject(data);
 }
 
+export async function getProductsTable(
+    {page = 1, pageSize = 2}:{
+        page?: number;
+        pageSize?: number;
+    }
+) {
+    const skip = (page -1) * pageSize;
+
+    const [data, totalCount] = await Promise.all([
+        prisma.product.findMany({
+            skip,
+            take: pageSize,
+            orderBy: { createdAt: "desc" },
+        }),
+        prisma.product.count(),
+    ]);
+    const totalPages = Math.ceil(totalCount / pageSize);
+    return {
+        data: convertToPlainObject(data),
+        pageInfo: {totalCount, totalPages, currentPage: page },
+    };
+}
+
 export async function getProductBySlug(slug: string) {
     const data = await prisma.product.findFirst({
         where: { slug },
