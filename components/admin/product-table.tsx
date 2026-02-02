@@ -3,6 +3,7 @@ import { Product } from "@/types/Product";
 import {
   Table,
   TableCaption,
+  TableHead,
   TableBody,
   TableCell,
   TableRow,
@@ -20,5 +21,27 @@ export default function ProductTable({
   currentPage?: number;
   pageSize?: number;
 }) {
-  return <div>ProductTable</div>;
+  return <>
+  <Table>
+    <TableCaption>
+        List of Products
+    </TableCaption>
+    <TableHeader>
+        <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Price</TableHead>
+            <TableHead>Slug</TableHead>
+            <TableHead>Quantity</TableHead>
+            <TableHead>Actions</TableHead>
+        </TableRow>
+    </TableHeader>
+    <TableBody>
+        {products.map((product) => (
+            <TableRow key={product.id}>
+                <TableCell>{product.name}</TableCell>
+            </TableRow>
+        ))}
+    </TableBody>
+  </Table>
+  </>;
 }
