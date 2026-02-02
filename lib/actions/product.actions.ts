@@ -1,6 +1,7 @@
 "use server";
 import {prisma} from "@/db/prisma";
 import { convertToPlainObject } from "../utils";
+import { Product } from "@/types/Product";
 
 export async function getLatestProducts() {
     const data = await prisma.product.findMany({
@@ -27,7 +28,7 @@ export async function getProductsTable(
     ]);
     const totalPages = Math.ceil(totalCount / pageSize);
     return {
-        data: convertToPlainObject(data),
+        data: convertToPlainObject(data) as unknown as Product[],
         pageInfo: {totalCount, totalPages, currentPage: page },
     };
 }
