@@ -1,6 +1,7 @@
 "use client";
 import { Label } from "@radix-ui/react-label";
-import React from "react";
+import React, { useState } from "react";
+import Link from "next/link";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { signUpDefaultValues } from "@/lib/constants";
@@ -8,37 +9,67 @@ import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 
 export default function CredentialsSignUpForm() {
-  async function handleSumbit(evt:React.FormEvent<HTMLFormElement>) {
+  const [commMethod, setCommMethod] = useState<"mail" | "phone">(
+    (signUpDefaultValues as any).communicationMethod ?? "mail",
+  );
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleSumbit(evt: React.FormEvent<HTMLFormElement>) {
     evt.preventDefault();
+    setError(null);
     const formData = new FormData(evt.currentTarget);
-    const name = String(formData.get("name"));
-    const email = String(formData.get("email"));
-    const password = String(formData.get("password"));
-    const phone = String(formData.get("phone"));
-    //Comprobaciones de los campos del formulario
-    if(!name || !password || !email) return;
-    console.log("Registro")
-    await authClient.signUp.email(
-      {
-        email,
-        password,
-        name,
-        phone
-      },
-      {
-        onRequest: () => {},
-        onResponse: () => {},
-        onError: (ctx) => {
-          toast.error(ctx.error.message);
-          console.log(ctx.error.message)
+    const name = String(formData.get("name") || "").trim();
+    const email = String(formData.get("email") || "").trim();
+    const password = String(formData.get("password") || "");
+    const phone = String(formData.get("phone") || "").trim();
+    const terms = formData.get("terms") === "on" || formData.get("terms") === "true";
+
+    // Validaciones de los campos del formulario
+    if (!name || !password || !email) {
+      setError("Por favor completa los campos obligatorios.");
+      return;
+    }
+    if (!terms) {
+      setError("Debes aceptar los términos y condiciones.");
+      return;
+    }
+    if (commMethod === "phone" && !phone) {
+      setError("Si eliges comunicación por teléfono debes proporcionar un número.");
+      return;
+    }
+
+    try {
+      await authClient.signUp.email(
+        {
+          email,
+          password,
+          name,
+          phone,
+          comms: commMethod,
         },
-        onSuccess: () => { 
-          toast.success("Registro correcto");
-          console.log("Registro correcto")
+        {
+          onRequest: () => {},
+          onResponse: () => {},
+          onError: (ctx) => {
+            const msg = ctx?.error?.message || "Error al registrar";
+            setError(msg);
+            toast.error(msg);
+            console.log(msg);
+          },
+          onSuccess: () => {
+            setError(null);
+            toast.success("Registro correcto");
+            console.log("Registro correcto");
+          },
         },
-      }
-    );
+      );
+    } catch (err: any) {
+      const msg = err?.message || "Error inesperado";
+      setError(msg);
+      toast.error(msg);
+    }
   }
+
   return (
     <form onSubmit={handleSumbit}>
       <div className="space-y-6">
@@ -62,6 +93,7 @@ export default function CredentialsSignUpForm() {
             required
           />
         </div>
+
         <div>
           <Label htmlFor="phone">Phone <span className="text-muted-foreground">(Optional)</span></Label>
           <Input
@@ -69,7 +101,7 @@ export default function CredentialsSignUpForm() {
             name="phone"
             type="text"
             defaultValue={signUpDefaultValues.phone}
-            required
+            required={commMethod === "phone"}
           />
         </div>
         <div>
@@ -93,13 +125,45 @@ export default function CredentialsSignUpForm() {
           />
         </div>
         <div className="space-x-2">
-          <Input id="terms" name="terms" type="checkbox" className="size-4" required />
+          <Input id="terms" name="terms" type="checkbox" className="size-4" />
           <Label htmlFor="terms">
-             I agree to the <a href="/terms" className="underline">Terms and Conditions</a>
+            I agree to the <a href="/terms" className="underline">Terms and Conditions</a>
           </Label>
         </div>
         <div>
+          <Label>How do you want to receive communications?</Label>
+          <div className="flex gap-4 mt-2">
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="comms"
+                value="mail"
+                checked={commMethod === "mail"}
+                onChange={() => setCommMethod("mail")}
+              />
+              <span>Mail</span>
+            </label>
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="comms"
+                value="phone"
+                checked={commMethod === "phone"}
+                onChange={() => setCommMethod("phone")}
+              />
+              <span>Phone</span>
+            </label>
+          </div>
+        </div>
+        <div>
           <Button className="w-full" type="submit">Sign Up</Button>
+          {error && (
+            <div className="text-sm text-destructive mt-2 text-center">{error}</div>
+          )}
+          <div className="mt-2 text-center">
+            <span className="text-muted-foreground">Aun no tienes una cuenta? </span>
+            <Link href="/sign-in" className="underline text-muted-foreground">Sign in</Link>
+          </div>
         </div>
       </div>
     </form>

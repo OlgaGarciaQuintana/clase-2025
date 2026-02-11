@@ -10,4 +10,5 @@ export const signUpDefaultValues = {
   email: "olga@olga.com",
   password: "123456",
   phone: "123456789",
+  communicationMethod: "mail"
 };

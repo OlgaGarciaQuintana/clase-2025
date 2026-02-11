@@ -12,17 +12,22 @@ export const auth = betterAuth({
   },
   user: {
     additionalFields: {
-      phone: {
-        type: "string",
-        required: false,
-        input: true,
-      },
       role: {
         type: "string",
         required: false,
         defaultValue: "user",
         input: false,
-      }
+      },
+      phone: {
+        type: "string",
+        required: false,
+        input: true,
+      },
+      comms: {
+        type: "string",
+        required: false,
+        input: true,
+      },
     },
   },
 });
