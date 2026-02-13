@@ -47,3 +47,45 @@ export async function actionPrueba(formData:FormData){
     };
     console.log(rawFormData);
 }
+
+// export type ProductFormState = {
+//     success: boolean;
+//     error: {
+//         name?: string[];
+//         slug?: string[];
+//         price?: string[];
+//         category?: string[];
+//         brand?: string[];
+//         description?: string[];
+//         stock?: string[];
+//         images?: string[];
+//         numReviews?: string[];
+//         isFeatured?: string[];
+//         banner?: string[];
+//         additional?: string[];
+//     };
+//     message: string;
+//     data?: Partial<Product>;
+// };
+
+export type ProductFormState = {
+    success: boolean;
+    error?: {[K in keyof Product]?:string[]} & { additional?: string[] };
+    message: string,
+    data?: Partial<Product>;
+}
+
+export async function createActionProduct(
+    prevState: ProductFormState,
+    formData: FormData
+) {
+    const rawData= Object.fromEntries(formData.entries());
+    const submittedData = {
+        ...rawData,
+        isFeatured: rawData.isFeatured === "on",
+        stock: Number(rawData.stock),
+        numReviews: Number(rawData.numReviews),
+        price: rawData.price?.toString() || "0",
+        images: ["/images/imagen.jpg"],
+    };
+}

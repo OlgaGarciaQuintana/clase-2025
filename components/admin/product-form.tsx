@@ -33,6 +33,7 @@ export default function ProductForm() {
                 className="col-span-2"
                 defaultValue={"name producto"}
               />
+              {/* Meter mensaje de error de name*/}
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Label>Slug</Label>
@@ -42,6 +43,7 @@ export default function ProductForm() {
                 className="col-span-2"
                 defaultValue={"slug"}
               />
+              {/* Meter mensaje de error de slug*/}
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Label>Brand</Label>
