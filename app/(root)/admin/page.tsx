@@ -31,7 +31,7 @@ export default async function AdminPage({
         <div className="flex justify-between">
           <h1 className="font-bold text-2xl">AdminPage</h1>
           <Button asChild>
-            <Link href={"/admin/create"}>+ Create Product</Link>
+            <Link href={"/admin/create-product"}>+ Create Product</Link>
           </Button>
         </div>
         <ProductTable
