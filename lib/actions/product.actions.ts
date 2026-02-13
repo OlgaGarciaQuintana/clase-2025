@@ -39,3 +39,11 @@ export async function getProductBySlug(slug: string) {
     });
     return data;
 }
+
+export async function actionPrueba(formData:FormData){
+    const rawFormData = {
+        name: formData.get("name"),
+        slug: formData.get("slug"),
+    };
+    console.log(rawFormData);
+}
