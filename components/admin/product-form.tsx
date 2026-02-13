@@ -47,9 +47,11 @@ export default function ProductForm() {
               type="text"
               name="name"
               className="col-span-2"
-              defaultValue={"name producto"}
+              defaultValue={(state.data?.name as string) || ""}
             />
-            {state.errors?.name && <p>{state.errors.name.join(", ")}</p>}
+            {state.errors?.name && (
+              <p className="text-destructive">{state.errors.name.join(", ")}</p>
+            )}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Label>Slug</Label>
@@ -57,9 +59,11 @@ export default function ProductForm() {
               type="text"
               name="slug"
               className="col-span-2"
-              defaultValue={"slug"}
+              defaultValue={(state.data?.slug as string) || ""}
             />
-            {/* Meter mensaje de error de slug*/}
+            {state.errors?.slug && (
+              <p className="text-destructive">{state.errors.slug.join(", ")}</p>
+            )}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Label>Brand</Label>
@@ -67,33 +71,53 @@ export default function ProductForm() {
               type="text"
               name="brand"
               className="col-span-2"
-              defaultValue={"Brand"}
+              defaultValue={(state.data?.brand as string) || ""}
             />
+            {state.errors?.brand && (
+              <p className="text-destructive">
+                {state.errors.brand.join(", ")}
+              </p>
+            )}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Label>Banner</Label>
             <Input
               type="text"
-              name="Banner"
+              name="banner"
               className="col-span-2"
-              defaultValue={"Banner"}
+              defaultValue={(state.data?.banner as string) || ""}
             />
+            {state.errors?.banner && (
+              <p className="text-destructive">
+                {state.errors.banner.join(", ")}
+              </p>
+            )}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Label>Category</Label>
             <Textarea
-              name="description"
+              name="category"
               className="col-span-2"
-              defaultValue={"Category"}
+              defaultValue={(state.data?.category as string) || ""}
             />
+            {state.errors?.category && (
+              <p className="text-destructive">
+                {state.errors.category.join(", ")}
+              </p>
+            )}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Label>Descripción</Label>
             <Textarea
               name="description"
               className="col-span-2"
-              defaultValue={"Descripción"}
+              defaultValue={(state.data?.description as string) || ""}
             />
+            {state.errors?.description && (
+              <p className="text-destructive">
+                {state.errors.description.join(", ")}
+              </p>
+            )}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Label>Stock</Label>
@@ -101,8 +125,13 @@ export default function ProductForm() {
               type="text"
               name="stock"
               className="col-span-2"
-              defaultValue={"Stock"}
+              defaultValue={(state.data?.stock as number) || ""}
             />
+            {state.errors?.stock && (
+              <p className="text-destructive">
+                {state.errors.stock.join(", ")}
+              </p>
+            )}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Label>NumReviews</Label>
@@ -110,8 +139,13 @@ export default function ProductForm() {
               type="number"
               name="numReviews"
               className="col-span-2"
-              defaultValue={"NumReviews"}
+              defaultValue={(state.data?.numReviews as number) || ""}
             />
+            {state.errors?.numReviews && (
+              <p className="text-destructive">
+                {state.errors.numReviews.join(", ")}
+              </p>
+            )}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Label>Price</Label>
@@ -119,14 +153,30 @@ export default function ProductForm() {
               type="number"
               name="price"
               className="col-span-2"
-              defaultValue={22.3}
+              defaultValue={state.data?.price || ""}
+              step={0.01}
             />
+            {state.errors?.price && (
+              <p className="text-destructive">
+                {state.errors.price.join(", ")}
+              </p>
+            )}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Label>isFeatured</Label>
-            <Checkbox name="isFeatured" className="col-span-2" />
+            <Checkbox
+              name="isFeatured"
+              className="col-span-2"
+              defaultChecked={(state.data?.isFeatured as boolean) || false}
+            />
+            {state.errors?.isFeatured && (
+              <p className="text-destructive">
+                {state.errors.isFeatured.join(", ")}
+              </p>
+            )}
           </div>
           <Button type="submit" className={cn("w-full text-2xl")}>
+            {" "}
             Create
           </Button>
         </form>
