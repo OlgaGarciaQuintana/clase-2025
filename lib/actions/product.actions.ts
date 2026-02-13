@@ -2,6 +2,7 @@
 import {prisma} from "@/db/prisma";
 import { convertToPlainObject } from "../utils";
 import { Product } from "@/types/Product";
+import { insertProductSchema } from "@/lib/validators";
 
 export async function getLatestProducts() {
     const data = await prisma.product.findMany({
@@ -70,15 +71,15 @@ export async function actionPrueba(formData:FormData){
 
 export type ProductFormState = {
     success: boolean;
-    error?: {[K in keyof Product]?:string[]} & { additional?: string[] };
+    errors?: {[K in keyof Product]?:string[]} & { additional?: string[] };
     message: string,
     data?: Partial<Product>;
 }
 
 export async function createActionProduct(
     prevState: ProductFormState,
-    formData: FormData
-) {
+    formData: FormData,
+): Promise<ProductFormState> {
     const rawData= Object.fromEntries(formData.entries());
     const submittedData = {
         ...rawData,
@@ -88,4 +89,42 @@ export async function createActionProduct(
         price: rawData.price?.toString() || "0",
         images: ["/images/imagen.jpg"],
     };
+    // Validar los datos
+    const validatedData = insertProductSchema.safeParse(submittedData);
+    if(!validatedData.success){
+        const flatened = validatedData.error.flatten((issue)=> issue.message);
+        return {
+            success: false,
+            errors: flatened.fieldErrors,
+            message: "Error de validación de los datos",
+            data: submittedData as unknown as Partial<Product>
+        }
+    }
+    try{
+        const result = await prisma.product.create({
+            data: validatedData.data,
+        });
+        // if(!result){
+        //     return {
+        //         success: false,
+        //         message: "Product not created",
+        //         errors: {additional: ["Product not created"]},
+        //         data: validatedData.data as Partial<Product>,
+        //     };
+        // }
+        if(!result) throw new Error("Problemas con la base de datos");
+        return {
+            success: true,
+            message: "Product added successfully",
+            errors: {},
+            data: validatedData.data as Partial<Product>,
+        };
+    }catch(error){
+        return {
+             success: true,
+            message: "Product added successfully",
+            errors: {},
+            data: validatedData.data as Partial<Product>,
+        };
+    }
 }
