@@ -25,41 +25,47 @@ export default function ProductTable({
   pageSize?: number;
 }) {
   return (
-    <>
-      <Table>
-        <TableCaption>List of Products</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Price</TableHead>
-            <TableHead>Slug</TableHead>
-            <TableHead>Quantity</TableHead>
-            <TableHead>Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {products.map((product) => (
-            <TableRow key={product.id}>
-              <TableCell>{product.name}</TableCell>
-              <TableCell>{product.price}</TableCell>
-              <TableCell>{product.slug}</TableCell>
-              <TableCell>{product.stock}</TableCell>
-              <TableCell>
-                <Button
-                  variant={"outline"}
-                  className="text-destructive"
-                  asChild
-                >
+    <Table>
+      <TableCaption>List of Products</TableCaption>
+
+      <TableHeader>
+        <TableRow>
+          <TableHead>Name</TableHead>
+          <TableHead>Price</TableHead>
+          <TableHead>Slug</TableHead>
+          <TableHead>Quantity</TableHead>
+          <TableHead>Actions</TableHead>
+        </TableRow>
+      </TableHeader>
+
+      <TableBody>
+        {products.map((product) => (
+          <TableRow key={product.id}>
+            <TableCell>{product.name}</TableCell>
+            <TableCell>{product.price}</TableCell>
+            <TableCell>{product.slug}</TableCell>
+            <TableCell>{product.stock}</TableCell>
+
+            <TableCell>
+              <div className="flex items-center gap-2">
+                
+                {/* Edit Button */}
+                <Button variant="outline" size="icon" asChild>
                   <Link href={`/admin/products/${product.id}`}>
-                    <Pencil />
-                    <Trash />
+                    <Pencil className="h-4 w-4" />
                   </Link>
                 </Button>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </>
+
+                {/* Delete Button */}
+                <Button variant="destructive" size="icon">
+                  <Trash className="h-4 w-4" />
+                </Button>
+
+              </div>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
   );
 }

@@ -5,7 +5,8 @@ import SignOutButton from "@/components/auth/sign-out-button";
 import ProductTable from "@/components/admin/product-table";
 import { getProductsTable } from "@/lib/actions/product.actions";
 import { Button } from "@/components/ui/button";
-import { Link } from "lucide-react";
+import Link from "next/link";
+
 
 export default async function AdminPage({
   searchParams,
@@ -27,8 +28,8 @@ export default async function AdminPage({
   return (
     <section id="admin" className="container mx-auto">
       <div className="px-8 py-16 container mx-auto max-w-screen space-y-8">
-        <div>
-          <h1>AdminPage</h1>
+        <div className="flex justify-between">
+          <h1 className="font-bold text-2xl">AdminPage</h1>
           <Button asChild>
             <Link href={"/admin/create"}>+ Create Product</Link>
           </Button>
