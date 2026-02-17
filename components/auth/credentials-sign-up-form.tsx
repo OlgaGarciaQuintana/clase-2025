@@ -13,6 +13,7 @@ export default function CredentialsSignUpForm() {
     (signUpDefaultValues as any).communicationMethod ?? "mail",
   );
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleSumbit(evt: React.FormEvent<HTMLFormElement>) {
     evt.preventDefault();
@@ -21,6 +22,7 @@ export default function CredentialsSignUpForm() {
     const name = String(formData.get("name") || "").trim();
     const email = String(formData.get("email") || "").trim();
     const password = String(formData.get("password") || "");
+    const confirmPassword = String(formData.get("confirmPassword") || "");
     const phone = String(formData.get("phone") || "").trim();
     const terms = formData.get("terms") === "on" || formData.get("terms") === "true";
 
@@ -29,6 +31,14 @@ export default function CredentialsSignUpForm() {
       setError("Por favor completa los campos obligatorios.");
       return;
     }
+    
+    // Validar que las contraseñas coincidan
+    if (password !== confirmPassword) {
+      setError("Las contraseñas no coinciden.");
+      toast.error("Las contraseñas no coinciden.");
+      return;
+    }
+    
     if (!terms) {
       setError("Debes aceptar los términos y condiciones.");
       return;
@@ -38,6 +48,7 @@ export default function CredentialsSignUpForm() {
       return;
     }
 
+    setIsLoading(true);
     try {
       await authClient.signUp.email(
         {
@@ -49,17 +60,21 @@ export default function CredentialsSignUpForm() {
         },
         {
           onRequest: () => {},
-          onResponse: () => {},
+          onResponse: () => {
+            setIsLoading(false);
+          },
           onError: (ctx) => {
             const msg = ctx?.error?.message || "Error al registrar";
             setError(msg);
             toast.error(msg);
             console.log(msg);
+            setIsLoading(false);
           },
           onSuccess: () => {
             setError(null);
             toast.success("Registro correcto");
             console.log("Registro correcto");
+            setIsLoading(false);
           },
         },
       );
@@ -67,6 +82,7 @@ export default function CredentialsSignUpForm() {
       const msg = err?.message || "Error inesperado";
       setError(msg);
       toast.error(msg);
+      setIsLoading(false);
     }
   }
 
@@ -156,7 +172,9 @@ export default function CredentialsSignUpForm() {
           </div>
         </div>
         <div>
-          <Button className="w-full" type="submit">Sign Up</Button>
+          <Button className="w-full" type="submit" disabled={isLoading}>
+            {isLoading ? "Registrando..." : "Sign Up"}
+          </Button>
           {error && (
             <div className="text-sm text-destructive mt-2 text-center">{error}</div>
           )}
